@@ -8,7 +8,7 @@
 Direct links for installation:
 
 * [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js)
-* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js)user.js
+* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js)
 
 ## Future Plans
 We aim to include scripts for a broader range of topics.
