@@ -1,8 +1,8 @@
 # octopus
 
-![Status](https://img.shields.io/badge/Status-개쩌는거를%20만들고%20있습니다-orange?style=flat-square)
+![status](https://img.shields.io/badge/status-개쩌는거를%20만들고%20있습니다-orange?style=flat-square)
 
-본 저장소는 웹 브라우징 경험 향상 및 광고 차단 방지 로직 우회를 목적으로 하는 유저스크립트를 제공합니다.
+웹 브라우징 경험 향상 및 광고 차단 방지 로직 우회를 목적으로 하는 유저스크립트 모음입니다.
 
 ## Scripts
 
