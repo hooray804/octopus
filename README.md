@@ -7,7 +7,7 @@
 ## Scripts
 
 * [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js)
-* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js)
+* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-litom.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-litom.user.js)
 
 ## Future Plans
 
