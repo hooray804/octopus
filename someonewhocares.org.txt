@@ -7,7 +7,7 @@
 #
 # See below for acknowledgements.
 
-# From https://someonewhocares.org/hosts/hosts
+# From https://someonewhocares.org/hosts/hosts. 본 리포지토리의 라이선스가 적용되지 않는 파일입니다.
 
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
