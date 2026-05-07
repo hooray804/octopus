@@ -1,3 +1,6 @@
+! Title: someonewhocares.org DNS filter
+! Version: 2026.05.07
+# 본 리포지토리의 라이선스가 적용되지 않는 파일입니다.
 # This hosts file is brought to you by Dan Pollock and can be found at
 # http://someonewhocares.org/hosts/
 # You are free to copy and distribute this file for non-commercial uses,
@@ -7,12 +10,10 @@
 #
 # See below for acknowledgements.
 
-# From https://someonewhocares.org/hosts/hosts. 본 리포지토리의 라이선스가 적용되지 않는 파일입니다.
-
 # Please forward any additions, corrections or comments by email to
 # hosts@someonewhocares.org
 
-# Last updated: Wed, 29 Apr 2026 at 02:41:47 GMT
+# Last updated: Thu, 07 May 2026 at 01:42:54 GMT
 
 # Use this file to prevent your computer from connecting to selected
 # internet hosts. This is an easy and effective way to protect you from 
@@ -1609,6 +1610,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 beautytemple.fr
 127.0.0.1 beboncoin.fr
 127.0.0.1 belambre.fr
+127.0.0.1 bellybuttons.sa.com
 127.0.0.1 benchmarkemail.fr
 127.0.0.1 benefitsgov.info
 127.0.0.1 benefitsorganic.com
@@ -1782,11 +1784,13 @@ ff02::3		ip6-allhosts
 127.0.0.1 climate-actionpayment.com
 127.0.0.1 clonezilla.es
 127.0.0.1 clonezilla.fr
+127.0.0.1 cloudalert.shop
 127.0.0.1 cltxhot.fun
 127.0.0.1 cmcre.fr
 127.0.0.1 cndpt.fr
 127.0.0.1 cnhv.co
 127.0.0.1 cnnews.fr
+127.0.0.1 cnrfms.pro
 127.0.0.1 cnt-jrs.com
 127.0.0.1 cnt.statistic.date
 127.0.0.1 codebiogblog.com
@@ -1846,6 +1850,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 croissieres.fr
 127.0.0.1 crouslyon.fr
 127.0.0.1 crpo.fr
+127.0.0.1 crrect.sa.com
 127.0.0.1 crypto-loot.com
 127.0.0.1 ctmsapp.com
 127.0.0.1 cuder.fr
@@ -1880,6 +1885,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 deloitteca.com
 127.0.0.1 delphix.fr
 127.0.0.1 deltarviews.bond
+127.0.0.1 dentalfix.shop
 127.0.0.1 denx.fr
 127.0.0.1 department06.fr
 127.0.0.1 deposit-cra2023.com
@@ -2033,6 +2039,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 flightams.fr
 127.0.0.1 fnactickets.fr
 127.0.0.1 foiegras-groliere.fr
+127.0.0.1 foreverprintco.com
 127.0.0.1 formumactif.fr
 127.0.0.1 forumdread.com
 127.0.0.1 forurm-candaulisme.fr
@@ -2772,6 +2779,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 poweroff.pt
 127.0.0.1 powertrfic.fr
 127.0.0.1 ppoi.org
+127.0.0.1 ppures.shop
 127.0.0.1 pr-wealth.in
 127.0.0.1 predictiondisplay.com
 127.0.0.1 predictivadnetwork.com
@@ -2779,6 +2787,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 premiumvideoupdates.com
 127.0.0.1 pressealgerei.fr
 127.0.0.1 pressesdesciences-po.fr
+127.0.0.1 pressmedieda.info
 127.0.0.1 prfcttit.za.com
 127.0.0.1 priosante.fr
 127.0.0.1 private-sportshop.fr
@@ -3268,6 +3277,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.a2uu36g43l.download
 127.0.0.1 www.abetterinternet.com
 127.0.0.1 www.abnehmenkabofit.de
+127.0.0.1 www.aconchoe.com
 127.0.0.1 www.activetrap.com
 127.0.0.1 www.adblock.fr
 127.0.0.1 www.adselector.com
@@ -3294,6 +3304,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.aramcom.space
 127.0.0.1 www.arfrepuestos.com
 127.0.0.1 www.arknasasbluecross.com
+127.0.0.1 www.artdualdesign.com
 127.0.0.1 www.asianread.com
 127.0.0.1 www.assistdocklane.uk
 127.0.0.1 www.audacity.es
@@ -3354,6 +3365,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.cambonanza.com
 127.0.0.1 www.camtory.com
 127.0.0.1 www.canadianshawid.com
+127.0.0.1 www.caothusohoc.com
 127.0.0.1 www.caramail.com
 127.0.0.1 www.careertake.com
 127.0.0.1 www.carehigher.com
@@ -3387,6 +3399,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.clonezilla.es
 127.0.0.1 www.clonezilla.fr
 127.0.0.1 www.cloudverge.uk
+127.0.0.1 www.clovercraftshop.com
 127.0.0.1 www.clubplanning.com
 127.0.0.1 www.coconutsport.com
 127.0.0.1 www.coinimp.com
@@ -3397,6 +3410,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.consultingbyelevate.com
 127.0.0.1 www.controlpop.com
 127.0.0.1 www.cookoven.com
+127.0.0.1 www.coolrextintshop.com
 127.0.0.1 www.corlythra.uk
 127.0.0.1 www.corvettiortho.com
 127.0.0.1 www.cpatglobal.com
@@ -3439,6 +3453,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.ekkekkocapital.com
 127.0.0.1 www.elanactivewear.com
 127.0.0.1 www.electrobell.com
+127.0.0.1 www.eljaleomedellin.com
 127.0.0.1 www.emailspend.com
 127.0.0.1 www.energiazoque.com
 127.0.0.1 www.esjetonline.com
@@ -3504,6 +3519,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.getnexuscard.com
 127.0.0.1 www.gezinti.com
 127.0.0.1 www.ggdark.net
+127.0.0.1 www.giadungnguyennhat.com
 127.0.0.1 www.gildedrosens.name
 127.0.0.1 www.gimp.es
 127.0.0.1 www.glassygrovefy.pro
@@ -3628,6 +3644,8 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.milgaard.com
 127.0.0.1 www.milkycascadeut.site
 127.0.0.1 www.minr.pw
+127.0.0.1 www.miocardite.com
+127.0.0.1 www.miziko.com
 127.0.0.1 www.modelsailboat.net
 127.0.0.1 www.moncasinoonline.com
 127.0.0.1 www.monkeyball.osa.pl
@@ -3636,6 +3654,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.mostexchange.com
 127.0.0.1 www.movielocks.com
 127.0.0.1 www.mshelp247.weebly.com
+127.0.0.1 www.msmithguitarstudio.com
 127.0.0.1 www.msmpokergamer.com
 127.0.0.1 www.msxzff.com
 127.0.0.1 www.multiceps.com
@@ -3645,6 +3664,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.mycontentlocker.com
 127.0.0.1 www.myexotel.com
 127.0.0.1 www.myfavcouponstore.com
+127.0.0.1 www.myfurnituresirplus.com
 127.0.0.1 www.myhucadvantage.com
 127.0.0.1 www.mylike.co.uk			# Facebook trojan
 127.0.0.1 www.mylovecards.com
@@ -3661,6 +3681,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.nigja.com
 127.0.0.1 www.nnews.net
 127.0.0.1 www.nobetsjustfun.com
+127.0.0.1 www.noithatphanthinh.com
 127.0.0.1 www.northvalesgrids.uk
 127.0.0.1 www.notepad2.com
 127.0.0.1 www.novemberrainx.com
@@ -3697,6 +3718,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.paramutplus.com
 127.0.0.1 www.parejaamateur.com
 127.0.0.1 www.partsttown.com
+127.0.0.1 www.paseyourself.com
 127.0.0.1 www.paviro.cfd
 127.0.0.1 www.pcfixguide.help
 127.0.0.1 www.pdrill.com
@@ -3768,6 +3790,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.riversidefr.com
 127.0.0.1 www.rnleonard.com
 127.0.0.1 www.rnodernssolution.com
+127.0.0.1 www.robkellysurf.com
 127.0.0.1 www.rtkmyz.cfd
 127.0.0.1 www.rtpbolaslotjago.com
 127.0.0.1 www.russian-sex.com
@@ -3855,8 +3878,10 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.tinkfrog.com
 127.0.0.1 www.tiompanalley.com
 127.0.0.1 www.tntadfacts.com
+127.0.0.1 www.totalencomenda.com
 127.0.0.1 www.toysmetaverse.com
 127.0.0.1 www.tradewinning.com
+127.0.0.1 www.traficsigntest.com
 127.0.0.1 www.trucktirehotline.com
 127.0.0.1 www.truecrypt.fr
 127.0.0.1 www.trueshelterju.pro
@@ -3882,6 +3907,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.voolat.com
 127.0.0.1 www.walkhelp.net
 127.0.0.1 www.wantsfly.com
+127.0.0.1 www.wapersab.com
 127.0.0.1 www.wardhotels.com
 127.0.0.1 www.warrenmovers.net
 127.0.0.1 www.watchesnew.com
@@ -3911,11 +3937,13 @@ ff02::3		ip6-allhosts
 127.0.0.1 www.workschat.com
 127.0.0.1 www.wraploans.com
 127.0.0.1 www.wrestlewebnews.com
+127.0.0.1 www.wwwpaipal.com
 127.0.0.1 www.xandermaker.com
 127.0.0.1 www.xdesimbi.com
 127.0.0.1 www.xtremetechcr.com
 127.0.0.1 www.yellowquartzkr.name
 127.0.0.1 www.yendermsoul.com
+127.0.0.1 www.yoolyes.com
 127.0.0.1 www.youfiletor.com
 127.0.0.1 www.yreta.com
 127.0.0.1 www.zenithvault.uk
@@ -3931,6 +3959,7 @@ ff02::3		ip6-allhosts
 127.0.0.1 xxlargepop.com
 127.0.0.1 yachtingmagazine.fr
 127.0.0.1 yama.myfixhub.cfd
+127.0.0.1 yanteaviation.com
 127.0.0.1 ycapital.fr
 127.0.0.1 yev.moviesdirectpro.com
 127.0.0.1 yexex.comfortykive.xyz
