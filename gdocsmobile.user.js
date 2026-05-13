@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Highlight Google Docs for mobile
 // @namespace    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/gdocsmobile.user.js
-// @version      2.0.1
+// @version      2.0.2
 // @description  모바일 웹사이트에서 지원하지 않는 기능인 텍스트 자동 검색, 강조 기능을 추가합니다.
 // @author       hooray804
 // @match        https://docs.google.com/document/d/*/mobilebasic*
