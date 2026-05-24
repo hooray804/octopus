@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         litom.i fast
 // @namespace    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-litom.user.js
-// @version      1.0.1
-// @description  클릭 없는 웹사이트 이용 (현재 List-KR에 대응 로직이 포함되어 본 스크립트의 별도 추가가 필요하지 않습니다.)
+// @version      1.1.0
+// @description  클릭 없는 웹사이트 이용 (현재 List-KR에 대응 로직이 포함되어 본 스크립트가 필요하지 않습니다.)
 // @author       hooray804
 // @match        *://*.litomi.i*/*
 // @homepage     https://github.com/hooray804/
