@@ -4,7 +4,9 @@
 // @version      1.1.0
 // @description  더 나은 웹사이트 보기
 // @author       hooray804
-// @match        *://sbxh*.com/*
+// @match        *://sbxh1.com/*
+// @match        *://sbxh2.com/*
+// @match        *://sbxh3.com/*
 // @homepage     https://github.com/hooray804/
 // @downloadURL  https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-sbxh.user.js
 // @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-sbxh.user.js
