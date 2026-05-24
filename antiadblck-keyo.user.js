@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         keyo.ac fast
 // @namespace    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js
-// @version      4.0.0
+// @version      5.0.0
 // @description  더 빠른 웹사이트 이용
 // @author       hooray804
 // @match        *://kio.ac/*
