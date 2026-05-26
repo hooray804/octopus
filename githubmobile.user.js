@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         GitHub Mobile Time Display
 // @namespace    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js
-// @version      1.0.0
+// @version      1.0.1
 // @description  모바일 웹사이트에서 지원하지 않는 기능인 정확한 시간 보기를 추가합니다.
 // @author       hooray804
 // @match        https://github.com/*
 // @homepage     https://github.com/hooray804/
 // @downloadURL  https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js
-// @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.jsgdocsmobile.user.js
+// @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js
 // @grant        none
 // ==/UserScript==
 
