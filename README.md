@@ -11,6 +11,7 @@
 * [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-sbxh.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-sbxh.user.js)
 * [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js)
 * [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/gdocsmobile.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/gdocsmobile.user.js)
+* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js)
 
 ## Future Plans
 
