@@ -10,7 +10,6 @@
 // @match        *://sbxh4.com/*
 // @match        *://sbxh5.com/*
 // @homepage     https://github.com/hooray804/
-// @downloadURL  https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-sbxh.user.js
 // @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-sbxh.user.js
 // @run-at       document-start
 // @grant        none
