@@ -4,7 +4,7 @@
 // @version      1.0.0
 // @description  모바일 웹사이트에서 지원하지 않는 기능인 정확한 시간 보기를 추가합니다.
 // @author       hooray804
-// @match        https://docs.google.com/document/*/mobilebasic*
+// @match        https://github.com/*
 // @homepage     https://github.com/hooray804/
 // @downloadURL  https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js
 // @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.jsgdocsmobile.user.js
