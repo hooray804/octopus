@@ -4,7 +4,7 @@
 // @version      6.0.0
 // @description  더 빠른 웹사이트 이용
 // @author       hooray804
-// @match        *://kio.ac/*
+// @match        *://kio.*/*
 // @homepage     https://github.com/hooray804/
 // @downloadURL  https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js
 // @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js
