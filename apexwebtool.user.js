@@ -1,10 +1,30 @@
 // ==UserScript==
 // @name         Apex 통합 웹 유틸리티
 // @namespace    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js
-// @version      1.4.1
+// @version      1.5.0
 // @description  페이지 수정 모드, 비디오 배속, 우클릭 해제, 읽기 접근성 향상을 위한 3단계 리더 모드, 커스텀 설정을 제공합니다.
 // @author       hooray804
 // @match        *://*/*
+// @exclude      *://captcha-api.yandex.ru/*
+// @exclude      *://ya.ru/showcaptcha?
+// @exclude      *wikipedia.org*
+// @exclude      *icloud.com*
+// @exclude      *hangouts.google.com*
+// @exclude      *www.facebook.com/plugins/*
+// @exclude      *www.facebook.com/v*/plugins*
+// @exclude      *disqus.com/embed/comments*
+// @exclude      *vk.com/widget*
+// @exclude      *twitter.com/intent/*
+// @exclude      *www.youtube.com/embed/*
+// @exclude      *player.vimeo.com*
+// @exclude      *coub.com/embed*
+// @exclude      *staticxx.facebook.com/connect/xd_arbiter/*
+// @exclude      *vk.com/q_frame*
+// @exclude      *tpc.googlesyndication.com*
+// @exclude      *syndication.twitter.com*
+// @exclude      *platform.twitter.com*
+// @exclude      *notifications.google.com*
+// @exclude      *google.com/recaptcha/*
 // @homepage     https://github.com/hooray804/
 // @downloadURL  https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js
 // @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js
