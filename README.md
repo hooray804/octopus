@@ -24,7 +24,7 @@
 
 * 핑거프린팅 차단(일반적이지 않은 고유한 환경으로 조작되어 개인정보 보호나 사이트 이용에 오히려 부정적인 영향을 줄 수 있음):
 
-[https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js)
+[https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/fp-annihilator.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/fp-annihilator.user.js)
 
 ## Future Plans
 
