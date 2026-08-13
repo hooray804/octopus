@@ -2,7 +2,7 @@
 // @name         Fingerprint Annihilator
 // @namespace    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/fp-annihilator.user.js
 // @version      1.0
-// @description  일부 웹사이트를 손상시킬 수 있습니다. Spoofs Hardware, Canvas, WebGL, Fonts, MediaDevices, and WebRTC securely.
+// @description  많은 웹사이트와 충돌할 수 있습니다. Spoofs Hardware, Canvas, WebGL, Fonts, MediaDevices, and WebRTC securely.
 // @author       hooray804 and Gemini
 // @match        *://*/*
 // @homepage     https://github.com/hooray804/
