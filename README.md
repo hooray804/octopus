@@ -6,10 +6,29 @@
 
 ## Scripts
 
-* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js)
-* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js)
-* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/gdocsmobile.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/gdocsmobile.user.js)
-* [https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js)
+* 키오/ac 안티애드블록 유저스크립트:
+
+
+[https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/antiadblck-keyo.user.js)
+
+
+* 좌측 하단에 리더 모드, 비디오 배속 등 유틸리티 버튼:
+
+
+[https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/apexwebtool.user.js)
+
+
+* Google Docs 모바일 검색 기능 추가:
+
+
+[https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/gdocsmobile.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/gdocsmobile.user.js)
+
+
+* GitHub 모바일 날짜 및 시간 표시:
+
+
+[https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js](https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/githubmobile.user.js)
+
 
 ## Future Plans
 
