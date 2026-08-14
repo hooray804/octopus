@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Fingerprint Annihilator
 // @namespace    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/fp-annihilator.user.js
-// @version      1.1.0
+// @version      1.2.0
 // @description  많은 웹사이트와 충돌할 수 있습니다. Spoofs Hardware, Canvas, WebGL, Fonts, MediaDevices, and WebRTC securely.
 // @author       hooray804 and Gemini
 // @match        *://*/*
@@ -10,7 +10,7 @@
 // @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/fp-annihilator.user.js
 // @grant        unsafeWindow
 // @run-at       document-start
-// ==/UserScript==
+// ==/UserScript=
 
 (function () {
     'use strict';
@@ -29,7 +29,7 @@
         const primaryLang = 'ko-KR';
         const primaryLangs = ['ko-KR', 'ko'];
         const foreignLangsPool = ['en-US', 'en', 'ja-JP', 'ja', 'zh-CN', 'zh', 'es-ES', 'es', 'fr-FR', 'fr', 'de-DE', 'de'];
-        const spoofedLanguages = [...primaryLangs, ...shuffleArray([...foreignLangsPool]).slice(0, randomInt(1, 3))];
+        const spoofedLanguages = Object.freeze([...primaryLangs, ...shuffleArray([...foreignLangsPool]).slice(0, randomInt(1, 3))]);
 
         const timezones = ['Asia/Seoul', 'Asia/Tokyo', 'America/New_York', 'America/Los_Angeles', 'Europe/London', 'Europe/Paris', 'Asia/Singapore', 'Australia/Sydney'];
         const locales = ['ko-KR', 'ja-JP', 'en-US', 'en-GB', 'fr-FR', 'de-DE'];
@@ -50,14 +50,6 @@
         ];
         const selectedGPU = randomItem(gpuProfiles);
 
-        const screenProfiles = [
-            { w: 1920, h: 1080, ah: 1040, dpr: 1 },
-            { w: 2560, h: 1440, ah: 1400, dpr: 1.25 },
-            { w: 3840, h: 2160, ah: 2120, dpr: 1.5 },
-            { w: 3440, h: 1440, ah: 1400, dpr: 1 }
-        ];
-        const screenRes = randomItem(screenProfiles);
-
         return {
             seed: sessionSeed,
             bitNoise: Math.floor(sessionSeed * 255) + 1,
@@ -74,20 +66,30 @@
             languages: spoofedLanguages,
             language: primaryLang,
             gpu: selectedGPU,
-            screen: screenRes
+            webrtcUfrag: Math.random().toString(36).substring(2, 14),
+            layoutOffset: {
+                w: randomInt(-30, 30),
+                h: randomInt(-30, 30),
+                dpr: (sessionSeed - 0.5) * 0.1,
+                fontScale: 0.98 + (sessionSeed * 0.04)
+            }
         };
     }
 
-    win.__SPOOF_SESSION__ = generateSession();
-    const S = () => win.__SPOOF_SESSION__;
+    const SESSION = generateSession();
+    const S = () => SESSION;
+    const infectedContexts = new WeakSet();
 
     const originalToString = Function.prototype.toString;
     const proxyMap = new WeakMap();
 
-    function mockNative(targetFn, mockFn, isGetter = false) {
-        const name = targetFn ? (targetFn.name || '') : '';
-        const fakeStr = isGetter ? `function get ${name}() { [native code] }` : `function ${name}() { [native code] }`;
+    function mockNative(targetFn, mockFn, propName = '') {
+        const name = targetFn ? (targetFn.name || propName) : propName;
+        const fakeStr = propName ? `function get ${name}() { [native code] }` : `function ${name}() { [native code] }`;
         proxyMap.set(mockFn, fakeStr);
+        try {
+            Object.defineProperty(mockFn, 'name', { value: propName ? `get ${name}` : name, configurable: true });
+        } catch (e) {}
         return mockFn;
     }
 
@@ -103,6 +105,7 @@
             }
         }
     });
+    proxyMap.set(win.Function.prototype.toString, `function toString() { [native code] }`);
 
     const originalGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
     Object.getOwnPropertyDescriptor = new Proxy(originalGetOwnPropertyDescriptor, {
@@ -113,16 +116,21 @@
                     desc.configurable = true; 
                     return desc; 
                 }
+                if (desc && desc.value && proxyMap.has(desc.value)) {
+                    desc.configurable = true;
+                    return desc;
+                }
                 return desc;
             } catch (e) {
                 return undefined;
             }
         }
     });
+    proxyMap.set(Object.getOwnPropertyDescriptor, `function getOwnPropertyDescriptor() { [native code] }`);
 
     function overrideProtoProperty(obj, prop, getterFn) {
         try {
-            const mockedGetter = mockNative(function () {}, getterFn, true);
+            const mockedGetter = mockNative(function () {}, getterFn, prop);
             Object.defineProperty(obj, prop, { 
                 get: mockedGetter, 
                 configurable: true, 
@@ -132,8 +140,8 @@
     }
 
     function injectPayload(context) {
-        if (!context || context.__INFECTED__) return;
-        context.__INFECTED__ = true;
+        if (!context || infectedContexts.has(context)) return;
+        infectedContexts.add(context);
 
         if (context.navigator) {
             const NavProto = context.Navigator.prototype;
@@ -147,42 +155,69 @@
             overrideProtoProperty(NavProto, 'deviceMemory', () => S().ram);
             overrideProtoProperty(NavProto, 'language', () => S().language);
             overrideProtoProperty(NavProto, 'languages', () => S().languages);
-            overrideProtoProperty(NavProto, 'oscpu', () => S().osCpu); 
             overrideProtoProperty(NavProto, 'pdfViewerEnabled', () => true);
             overrideProtoProperty(NavProto, 'cookieEnabled', () => true);
             overrideProtoProperty(NavProto, 'doNotTrack', () => randomItem([null, "1"]));
+            overrideProtoProperty(NavProto, 'webdriver', () => false);
 
             if (!context.chrome) {
                 context.chrome = { app: { isInstalled: false }, runtime: {} };
             }
 
             if (context.navigator.userAgentData || !context.navigator.userAgentData) {
-                const mockUAD = {
-                    get brands() {
-                        return [
-                            { brand: "Chromium", version: `${S().chromeMajor}` },
-                            { brand: "Google Chrome", version: `${S().chromeMajor}` },
-                            { brand: "Not-A.Brand", version: "99" }
-                        ];
-                    },
-                    mobile: false,
-                    platform: "Windows",
-                    getHighEntropyValues: mockNative(function getHighEntropyValues() {}, function (hints) {
+                const realUAD = context.navigator.userAgentData;
+                let mockUAD;
+                
+                if (realUAD && realUAD.constructor && realUAD.constructor.prototype) {
+                    mockUAD = Object.create(realUAD.constructor.prototype);
+                    Object.defineProperties(mockUAD, {
+                        brands: { get: mockNative(function get() {}, () => [{ brand: "Chromium", version: `${S().chromeMajor}` }, { brand: "Google Chrome", version: `${S().chromeMajor}` }, { brand: "Not-A.Brand", version: "99" }], 'brands'), enumerable: true },
+                        mobile: { get: mockNative(function get() {}, () => false, 'mobile'), enumerable: true },
+                        platform: { get: mockNative(function get() {}, () => "Windows", 'platform'), enumerable: true }
+                    });
+                    mockUAD.getHighEntropyValues = mockNative(realUAD.constructor.prototype.getHighEntropyValues, function () {
                         return Promise.resolve({
                             architecture: "x86",
                             bitness: "64",
-                            brands: this.brands,
+                            brands: mockUAD.brands,
                             mobile: false,
                             model: "",
                             platform: "Windows",
                             platformVersion: "15.0.0",
                             uaFullVersion: `${S().chromeMajor}.0.6367.60`
                         });
-                    }),
-                    toJSON: mockNative(function toJSON() {}, function () {
-                        return { brands: this.brands, mobile: false, platform: "Windows" };
-                    })
-                };
+                    });
+                    mockUAD.toJSON = mockNative(realUAD.constructor.prototype.toJSON, function () {
+                        return { brands: mockUAD.brands, mobile: false, platform: "Windows" };
+                    });
+                } else {
+                    mockUAD = {
+                        get brands() {
+                            return [
+                                { brand: "Chromium", version: `${S().chromeMajor}` },
+                                { brand: "Google Chrome", version: `${S().chromeMajor}` },
+                                { brand: "Not-A.Brand", version: "99" }
+                            ];
+                        },
+                        mobile: false,
+                        platform: "Windows",
+                        getHighEntropyValues: mockNative(function getHighEntropyValues() {}, function () {
+                            return Promise.resolve({
+                                architecture: "x86",
+                                bitness: "64",
+                                brands: this.brands,
+                                mobile: false,
+                                model: "",
+                                platform: "Windows",
+                                platformVersion: "15.0.0",
+                                uaFullVersion: `${S().chromeMajor}.0.6367.60`
+                            });
+                        }),
+                        toJSON: mockNative(function toJSON() {}, function () {
+                            return { brands: this.brands, mobile: false, platform: "Windows" };
+                        })
+                    };
+                }
                 overrideProtoProperty(NavProto, 'userAgentData', () => mockUAD);
             }
 
@@ -231,6 +266,9 @@
                                 if (prop === 'state' && (desc.name === 'notifications' || desc.name === 'geolocation')) {
                                     return S().seed > 0.5 ? 'prompt' : 'denied';
                                 }
+                                if (typeof target[prop] === 'function') {
+                                    return target[prop].bind(target);
+                                }
                                 return Reflect.get(target, prop);
                             }
                         });
@@ -243,12 +281,20 @@
                 context.navigator.mediaDevices.enumerateDevices = mockNative(origEnum, function () {
                     return Reflect.apply(origEnum, this, arguments).then(devices => {
                         return devices.map(d => {
-                            const fakeDevice = Object.create(d.__proto__);
-                            Object.assign(fakeDevice, d, {
-                                deviceId: d.deviceId ? 'dev-' + S().bitNoise + '-' + d.deviceId.slice(-10) : d.deviceId,
-                                groupId: d.groupId ? 'grp-' + S().bitNoise + '-' + d.groupId.slice(-10) : d.groupId
+                            return new Proxy(d, {
+                                get(target, prop) {
+                                    if (prop === 'deviceId' && target.deviceId) {
+                                        return 'dev-' + S().bitNoise + '-' + target.deviceId.slice(-10);
+                                    }
+                                    if (prop === 'groupId' && target.groupId) {
+                                        return 'grp-' + S().bitNoise + '-' + target.groupId.slice(-10);
+                                    }
+                                    if (typeof target[prop] === 'function') {
+                                        return target[prop].bind(target);
+                                    }
+                                    return Reflect.get(target, prop);
+                                }
                             });
-                            return fakeDevice;
                         });
                     });
                 });
@@ -264,6 +310,7 @@
                                 if (p === 'charging') return S().seed > 0.5;
                                 if (p === 'chargingTime') return S().seed > 0.5 ? 3600 : Infinity;
                                 if (p === 'dischargingTime') return S().seed > 0.5 ? Infinity : 7200;
+                                if (typeof t[p] === 'function') return t[p].bind(t);
                                 return Reflect.get(t, p);
                             }
                         });
@@ -279,23 +326,48 @@
             }
         }
 
-        if (context.screen) {
+        if (context.Screen) {
             const ScreenProto = context.Screen.prototype;
-            overrideProtoProperty(ScreenProto, 'width', () => S().screen.w);
-            overrideProtoProperty(ScreenProto, 'height', () => S().screen.h);
-            overrideProtoProperty(ScreenProto, 'availWidth', () => S().screen.w);
-            overrideProtoProperty(ScreenProto, 'availHeight', () => S().screen.ah);
-            overrideProtoProperty(ScreenProto, 'colorDepth', () => 24);
-            overrideProtoProperty(ScreenProto, 'pixelDepth', () => 24);
-            overrideProtoProperty(ScreenProto, 'availTop', () => 0);
-            overrideProtoProperty(ScreenProto, 'availLeft', () => 0);
+            ['width', 'height', 'availWidth', 'availHeight'].forEach(prop => {
+                const desc = Object.getOwnPropertyDescriptor(ScreenProto, prop);
+                if (desc && desc.get) {
+                    const origGet = desc.get;
+                    desc.get = mockNative(origGet, function () {
+                        const realVal = Reflect.apply(origGet, this, arguments);
+                        return realVal + S().layoutOffset[prop.toLowerCase().includes('width') ? 'w' : 'h'];
+                    }, prop);
+                    Object.defineProperty(ScreenProto, prop, desc);
+                }
+            });
+            
+            const colorDesc = Object.getOwnPropertyDescriptor(ScreenProto, 'colorDepth');
+            if (colorDesc && colorDesc.get) {
+                const origColorGet = colorDesc.get;
+                colorDesc.get = mockNative(origColorGet, function () {
+                    return 24;
+                }, 'colorDepth');
+                Object.defineProperty(ScreenProto, 'colorDepth', colorDesc);
+                Object.defineProperty(ScreenProto, 'pixelDepth', colorDesc);
+            }
         }
-        
-        overrideProtoProperty(context, 'innerWidth', () => S().screen.w);
-        overrideProtoProperty(context, 'innerHeight', () => S().screen.ah - 100);
-        overrideProtoProperty(context, 'outerWidth', () => S().screen.w);
-        overrideProtoProperty(context, 'outerHeight', () => S().screen.ah);
-        overrideProtoProperty(context, 'devicePixelRatio', () => S().screen.dpr);
+
+        ['innerWidth', 'innerHeight', 'outerWidth', 'outerHeight', 'devicePixelRatio'].forEach(prop => {
+            let target = context;
+            let desc = Object.getOwnPropertyDescriptor(target, prop);
+            if (!desc && context.Window) {
+                target = context.Window.prototype;
+                desc = Object.getOwnPropertyDescriptor(target, prop);
+            }
+            if (desc && desc.get) {
+                const origGet = desc.get;
+                desc.get = mockNative(origGet, function () {
+                    const val = Reflect.apply(origGet, this, arguments);
+                    if (prop === 'devicePixelRatio') return val + S().layoutOffset.dpr;
+                    return val + S().layoutOffset[prop.toLowerCase().includes('width') ? 'w' : 'h'];
+                }, prop);
+                Object.defineProperty(target, prop, desc);
+            }
+        });
 
         if (context.document && context.document.fonts) {
             const origCheck = context.document.fonts.check;
@@ -309,11 +381,18 @@
         }
 
         if (context.Intl && context.Intl.DateTimeFormat) {
+            let realTZ = 'UTC';
+            let realLocale = 'en-US';
+            try {
+                realTZ = new context.Intl.DateTimeFormat().resolvedOptions().timeZone;
+                realLocale = new context.Intl.DateTimeFormat().resolvedOptions().locale;
+            } catch (e) {}
+
             const origResolvedOptions = context.Intl.DateTimeFormat.prototype.resolvedOptions;
             context.Intl.DateTimeFormat.prototype.resolvedOptions = mockNative(origResolvedOptions, function () {
                 const options = Reflect.apply(origResolvedOptions, this, arguments);
-                options.timeZone = S().timezone;
-                options.locale = S().locale;
+                if (options.timeZone === realTZ) options.timeZone = S().timezone;
+                if (options.locale === realLocale) options.locale = S().locale;
                 return options;
             });
         }
@@ -321,14 +400,23 @@
         if (context.Date) {
             const origGetTimezoneOffset = context.Date.prototype.getTimezoneOffset;
             context.Date.prototype.getTimezoneOffset = mockNative(origGetTimezoneOffset, function () {
-                const tz = S().timezone;
-                if (tz.includes('Seoul') || tz.includes('Tokyo')) return -540;
-                if (tz.includes('New_York')) return 240;
-                if (tz.includes('Los_Angeles')) return 420;
-                if (tz.includes('London')) return 0;
-                if (tz.includes('Paris')) return -60;
-                if (tz.includes('Sydney')) return -660;
-                return -540; 
+                try {
+                    const dateStr = new Intl.DateTimeFormat('en-US', {
+                        timeZone: S().timezone,
+                        timeZoneName: 'shortOffset'
+                    }).format(this);
+                    if (dateStr.includes('GMT') && !dateStr.includes('+') && !dateStr.includes('-')) {
+                        return 0;
+                    }
+                    const match = dateStr.match(/GMT([+-])(\d{1,2}):?(\d{2})?/);
+                    if (match) {
+                        const sign = match[1] === '+' ? -1 : 1;
+                        const hours = parseInt(match[2], 10);
+                        const mins = match[3] ? parseInt(match[3], 10) : 0;
+                        return sign * (hours * 60 + mins);
+                    }
+                } catch(e) {}
+                return Reflect.apply(origGetTimezoneOffset, this, arguments);
             });
         }
 
@@ -363,7 +451,7 @@
                     const origFn = context.Math[fn];
                     context.Math[fn] = mockNative(origFn, function (...args) {
                         const res = Reflect.apply(origFn, this, args);
-                        if (typeof res === 'number' && !isNaN(res) && isFinite(res) && res !== 0) {
+                        if (typeof res === 'number' && !isNaN(res) && isFinite(res) && res !== 0 && res % 1 !== 0) {
                             return res + S().mathJitter;
                         }
                         return res;
@@ -372,29 +460,19 @@
             });
         }
 
-        const appleFonts = ['gill sans', 'helvetica neue', 'menlo', 'avenir', 'palatino', 'sf pro', 'system-ui', '-apple-system-body'];
-        const windowsFonts = ['consolas', 'segoe ui', 'arial', 'calibri', 'cambria', 'tahoma', 'verdana', 'ms mincho', 'ms outlook'];
         const adBlockerSelectors = ['#Iklan-Melayang', '.quangcao', '.mainostila', '#adblock-honeypot', '.hs-sosyal', '.BetterJsPopOverlay', '.mobile_adhesion', '#mgid_iframe1', '.yb-floorad', '.ezmob-footer'];
 
-        const manipulateFontDimension = (fontFamily, originalValue, isWidth, element) => {
-            if (element && element.id && adBlockerSelectors.includes('#' + element.id)) return 0;
-            if (element && element.className && adBlockerSelectors.some(cls => ('.' + element.className).includes(cls))) return 0;
-
-            try {
-                if (!fontFamily && element) fontFamily = context.getComputedStyle(element).fontFamily;
-            } catch (e) {
-                fontFamily = 'Arial';
+        const manipulateFontDimension = (originalValue, isWidth, element) => {
+            if (originalValue === 0) return 0;
+            if (element) {
+                try {
+                    const id = element.id || element.getAttribute('id');
+                    if (id && typeof id === 'string' && adBlockerSelectors.includes('#' + id)) return originalValue;
+                    const cls = element.className || element.getAttribute('class');
+                    if (cls && typeof cls === 'string' && adBlockerSelectors.some(c => ('.' + cls).includes(c))) return originalValue;
+                } catch(e) {}
             }
-            if (!fontFamily) return originalValue + (S().seed * 0.1);
-            
-            const lowerFont = fontFamily.toLowerCase();
-            if (appleFonts.some(f => lowerFont.includes(f))) {
-                return originalValue * 0.75 + (S().seed * 0.1);
-            }
-            if (windowsFonts.some(f => lowerFont.includes(f))) {
-                return originalValue * (isWidth ? 1.05 : 1.03) + (S().seed * 0.1);
-            }
-            return originalValue + (S().seed * 0.1);
+            return originalValue * S().layoutOffset.fontScale + (isWidth ? S().mathJitter * 20 : S().mathJitter * 10);
         };
 
         if (context.HTMLElement) {
@@ -404,9 +482,9 @@
                 const origGet = desc.get;
                 desc.get = mockNative(origGet, function () {
                     const origVal = Reflect.apply(origGet, this, arguments);
-                    if (origVal === 0 && (!this.id && !this.className)) return 0; 
-                    return manipulateFontDimension(this.style.fontFamily, origVal, isWidth, this);
-                }, true);
+                    const fakeVal = manipulateFontDimension(origVal, isWidth, this);
+                    return fakeVal === 0 ? 0 : Math.round(fakeVal);
+                }, prop);
                 Object.defineProperty(context.HTMLElement.prototype, prop, desc);
             };
             hookDOMSize('offsetWidth', true);
@@ -417,9 +495,10 @@
                 const rect = Reflect.apply(origGetRect, this, arguments);
                 if (rect.width === 0 && rect.height === 0) return rect;
                 
-                const fakeWidth = manipulateFontDimension(this.style.fontFamily, rect.width, true, this);
-                const fakeHeight = manipulateFontDimension(this.style.fontFamily, rect.height, false, this);
-                return new DOMRect(rect.x + (S().mathJitter * 100), rect.y + (S().mathJitter * 100), fakeWidth, fakeHeight);
+                const fakeWidth = manipulateFontDimension(rect.width, true, this);
+                const fakeHeight = manipulateFontDimension(rect.height, false, this);
+                const TargetDOMRect = context.DOMRect || DOMRect;
+                return new TargetDOMRect(rect.x + (S().mathJitter * 100), rect.y + (S().mathJitter * 100), fakeWidth, fakeHeight);
             });
         }
 
@@ -458,10 +537,11 @@
             const origGetChannelData = context.AudioBuffer.prototype.getChannelData;
             context.AudioBuffer.prototype.getChannelData = mockNative(origGetChannelData, function () {
                 const data = Reflect.apply(origGetChannelData, this, arguments);
-                if (data && data.length) {
+                if (data && data.length && !data.__spoofed) {
                     for (let i = 0; i < data.length; i += 45) {
                         data[i] += S().audioJitter;
                     }
+                    Object.defineProperty(data, '__spoofed', { value: true, enumerable: false, configurable: true });
                 }
                 return data;
             });
@@ -470,9 +550,14 @@
         function noiseCanvasBuffer(bufferArray) {
             if (!bufferArray || !bufferArray.length) return;
             const skip = 4 * Math.max(1, Math.floor(bufferArray.length / (512 * 4)));
+            const bit = (S().bitNoise % 2) === 0 ? 1 : 2;
             for (let i = 0; i < bufferArray.length; i += skip) {
                 if (i % 4 !== 3) { 
-                    bufferArray[i] = (bufferArray[i] ^ S().bitNoise) & 255;
+                    if (bit === 1) {
+                        bufferArray[i] = (bufferArray[i] & 254) | 1;
+                    } else {
+                        bufferArray[i] = (bufferArray[i] & 253) | 2;
+                    }
                 }
             }
         }
@@ -506,7 +591,7 @@
             const origMeasureText = C2D.measureText;
             C2D.measureText = mockNative(origMeasureText, function (text) {
                 const metrics = Reflect.apply(origMeasureText, this, arguments);
-                const fakeW = manipulateFontDimension(this.font, metrics.width, true, null);
+                const fakeW = manipulateFontDimension(metrics.width, true, null);
                 Object.defineProperties(metrics, {
                     width: { value: fakeW },
                     actualBoundingBoxRight: { value: (metrics.actualBoundingBoxRight || 0) + (S().seed * 0.1) }
@@ -626,7 +711,7 @@
             context.RTCPeerConnection.prototype.createOffer = mockNative(origCreateOffer, function () {
                 return Reflect.apply(origCreateOffer, this, arguments).then(offer => {
                     if (offer && offer.sdp) {
-                        offer.sdp = offer.sdp.replace(/a=ice-ufrag:.+/g, 'a=ice-ufrag:' + Math.random().toString(36).substring(2));
+                        offer.sdp = offer.sdp.replace(/a=ice-ufrag:.+/g, 'a=ice-ufrag:' + S().webrtcUfrag);
                     }
                     return offer;
                 });
@@ -682,7 +767,7 @@
                     } catch (e) {}
                 }
                 return cw;
-            });
+            }, 'contentWindow');
             Object.defineProperty(win.HTMLIFrameElement.prototype, 'contentWindow', iframeDesc);
         }
     }
