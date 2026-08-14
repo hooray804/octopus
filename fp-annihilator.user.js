@@ -10,7 +10,7 @@
 // @updateURL    https://raw.githubusercontent.com/hooray804/octopus/refs/heads/main/fp-annihilator.user.js
 // @grant        unsafeWindow
 // @run-at       document-start
-// ==/UserScript=
+// ==/UserScript==
 
 (function () {
     'use strict';
